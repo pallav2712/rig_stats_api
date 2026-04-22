@@ -1,4 +1,3 @@
-from annotated_types import T
 from fastapi import APIRouter, status, HTTPException
 import psutil
 
@@ -19,21 +18,21 @@ def specifications():
     
     for item in discs_mountpoint:
         try:
-            total_disc_size.append({"drive": item, "total_size" : int(psutil.disk_usage(item).total / (1024**3)) })
+            total_disc_size.append(int(psutil.disk_usage(item).total / (1024**3)))
         
         except Exception as e:
                 print(f"Error on {item}: {e}")
             
 
     
-    return {
-	"CPU": {
-		"Cores": psutil.cpu_count(logical=False),
-                "Threads": psutil.cpu_count(),       
-                "Frequency (GHz)": freq
-	        },
-	"RAM (bytes)" : psutil.virtual_memory().total,
-	"Disks (GB)"  : total_disc_size
-        }    
+    return{
+                "cpu": {
+                        "cores": psutil.cpu_count(logical=False),
+                        "threads": psutil.cpu_count(),       
+                        "frequency": freq
+                },
+                "ram" : [psutil.virtual_memory().total],
+                "disks"  : total_disc_size
+           }    
 
            

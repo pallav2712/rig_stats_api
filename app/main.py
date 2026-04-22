@@ -1,12 +1,13 @@
 from fastapi import FastAPI
 
-from app.routers import usage
+from app.routers import battery, usage
 from .routers import stats
 
 app = FastAPI()
 
 app.include_router(stats.router)
 app.include_router(usage.router)
+app.include_router(battery.router)
 
 
 @app.get("/")

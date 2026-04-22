@@ -12,11 +12,11 @@ def specifications():
     
     freq = float(psutil.cpu_freq(percpu=False).max/1000)
 
-    discs_mountpoint = [item.device for item in psutil.disk_partitions()]
+    disc_devices = [item.device for item in psutil.disk_partitions()]
     #total_disc_size = [int(psutil.disk_usage(item.mountpoint).total / (1024**3)) for item in disc_tup]
     total_disc_size = []
     
-    for item in discs_mountpoint:
+    for item in disc_devices:
         try:
             total_disc_size.append(int(psutil.disk_usage(item).total / (1024**3)))
         

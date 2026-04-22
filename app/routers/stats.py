@@ -12,13 +12,14 @@ def specifications():
     
     freq = float(psutil.cpu_freq(percpu=False).max/1000)
 
-    disc_devices = [item.device for item in psutil.disk_partitions()]
+    disc_mountpoints = [item.mountpoint for item in psutil.disk_partitions()]
     #total_disc_size = [int(psutil.disk_usage(item.mountpoint).total / (1024**3)) for item in disc_tup]
     total_disc_size = []
     
-    for item in disc_devices:
+    for item in disc_mountpoints:
         try:
-            total_disc_size.append(int(psutil.disk_usage(item).total / (1024**3)))
+            if int(psutil.disk_usage(item).total / (1024**3)) != 0:
+                total_disc_size.append(int(psutil.disk_usage(item).total / (1024**3)))
         
         except Exception as e:
                 print(f"Error on {item}: {e}")
